@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">RecipeApp</string>
+    <string name="Password" />
+    <string name="welcome">Welcome,</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="logout">Logout</string>
+    <string name="admin_area">Admin Area</string>
+</resources>
