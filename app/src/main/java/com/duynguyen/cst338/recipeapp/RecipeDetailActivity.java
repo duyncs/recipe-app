@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.room.Room;
 
@@ -26,6 +28,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private Recipe recipe;
     private int currentUserId;
     private int recipeId;
+    private TextView logOutLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +37,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
         boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false);
+        currentUserId = sharedPreferences.getInt("userId", -1);
 
-        if (getIntent().getExtras() != null) {
-            currentUserId = getIntent().getIntExtra("currentUserId", -1);
-        }
-
+        logOutLink = findViewById(R.id.logOut_link);
         recipeTitle = findViewById(R.id.recipe_title);
         recipeIngredients = findViewById(R.id.recipe_ingredients);
         recipeDirections = findViewById(R.id.recipe_directions);
@@ -78,6 +79,21 @@ public class RecipeDetailActivity extends AppCompatActivity {
                             }
                         });
                 builder.create().show();
+            }
+        });
+
+        //Log Out
+        logOutLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+
+                Intent intent = new Intent(RecipeDetailActivity.this, LoginActivity.class);
+                Toast.makeText(RecipeDetailActivity.this, "You has been logout", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+                finish();
             }
         });
     }

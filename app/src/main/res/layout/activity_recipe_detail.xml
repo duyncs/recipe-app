@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".RecipeDetailActivity">
 
     <LinearLayout
@@ -13,35 +14,76 @@
         android:padding="16dp">
 
         <TextView
+            android:id="@+id/logOut_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="Logout"
+            android:linksClickable="true"
+            android:textColor="@color/white"/>
+
+        <TextView
             android:id="@+id/recipe_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ingredients_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Recipe Title"
-            android:textSize="24sp"
+            android:text="INGREDIENTS"
+            android:textColor="#FFC107"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/recipe_ingredients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ingredients"
+            android:layout_below="@id/ingredients_label"
+            android:layout_marginTop="10dp"
+            android:text=""
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/direction_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/recipe_ingredients"
+            android:text="DIRECTIONS"
+            android:textColor="#FFC107"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/recipe_directions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Directions"
+            android:layout_below="@id/direction_label"
+            android:layout_marginTop="10dp"
+            android:text=""
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textColor="@color/white"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/recipe_directions"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/design_default_color_secondary"
             android:text="Delete Recipe" />
-
     </LinearLayout>
 </ScrollView>

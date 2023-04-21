@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.duynguyen.cst338.recipeapp.db.User;
 
@@ -18,19 +19,16 @@ public class LandingPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
 
-        if (getIntent().getExtras() != null) {
-            currentUserId = getIntent().getIntExtra("currentUserId", -1);
-        }
         SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
         String username = sharedPreferences.getString("username", "");
         boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false);
+        currentUserId = sharedPreferences.getInt("userId", -1);
 
-        TextView welcomeText = findViewById(R.id.welcome_text);
+        TextView usernameTextLink = findViewById(R.id.username_textLink);
         Button adminButton = findViewById(R.id.manage_users_button);
-        Button logoutButton = findViewById(R.id.logout_button);
         Button addRecipeButton = findViewById(R.id.add_recipe_button);
         Button viewRecipesButton = findViewById(R.id.view_recipes_button);
-        welcomeText.setText("Welcome, " + username);
+        usernameTextLink.setText("Welcome, " + username);
 
         if (isAdmin) {
             adminButton.setVisibility(View.VISIBLE);
@@ -64,14 +62,16 @@ public class LandingPage extends AppCompatActivity {
             }
         });
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+        // Logout
+        usernameTextLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
                 editor.apply();
 
-                Intent intent = new Intent(LandingPage.this, MainActivity.class);
+                Intent intent = new Intent(LandingPage.this, LoginActivity.class);
+                Toast.makeText(LandingPage.this, "You has been logout", Toast.LENGTH_LONG).show();
                 startActivity(intent);
                 finish();
             }

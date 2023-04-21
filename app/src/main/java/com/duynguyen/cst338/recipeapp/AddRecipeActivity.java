@@ -3,10 +3,13 @@ package com.duynguyen.cst338.recipeapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.duynguyen.cst338.recipeapp.db.AppDataBase;
@@ -18,6 +21,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     private EditText titleEditText;
     private EditText ingredientsEditText;
     private EditText directionsEditText;
+    private TextView logOutLink;
     private Button submitButton;
 
     private RecipeDAO recipeDAO;
@@ -27,10 +31,10 @@ public class AddRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
 
-        if (getIntent().getExtras() != null) {
-            currentUserId = getIntent().getIntExtra("currentUserId", -1);
-        }
+        SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
+        currentUserId = sharedPreferences.getInt("userId", -1);
 
+        logOutLink = findViewById(R.id.logOut_link);
         titleEditText = findViewById(R.id.title_edit_text);
         ingredientsEditText = findViewById(R.id.ingredients_edit_text);
         directionsEditText = findViewById(R.id.directions_edit_text);
@@ -51,9 +55,24 @@ public class AddRecipeActivity extends AppCompatActivity {
                 } else {
                     Recipe newRecipe = new Recipe(currentUserId, title, ingredients, directions);
                     recipeDAO.insert(newRecipe);
-                    Toast.makeText(AddRecipeActivity.this, "Recipe added successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddRecipeActivity.this, "Recipe added successfully", Toast.LENGTH_LONG).show();
                     finish(); // Close the activity and return to the previous one
                 }
+            }
+        });
+
+        //Log Out
+        logOutLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+
+                Intent intent = new Intent(AddRecipeActivity.this, LoginActivity.class);
+                Toast.makeText(AddRecipeActivity.this, "You has been logout", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+                finish();
             }
         });
     }
