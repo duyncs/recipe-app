@@ -1,23 +1,21 @@
 package com.duynguyen.cst338.recipeapp.utils;
-import com.duynguyen.cst338.recipeapp.AddRecipeActivity;
-import com.duynguyen.cst338.recipeapp.LoginActivity;
+
 import com.duynguyen.cst338.recipeapp.R;
 import com.duynguyen.cst338.recipeapp.db.AppDataBase;
 import com.duynguyen.cst338.recipeapp.db.User;
 import com.duynguyen.cst338.recipeapp.db.UserDAO;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -47,24 +45,34 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         holder.username.setText(user.getUsername());
         holder.email.setText(user.getEmail());
 
-        if(user.isSuspended()){
-            holder.user_status.setText("Inactive");
-        }else{
-            holder.user_status.setText("Active");
+        if (user.isSuspended()) {
+            holder.status_Textview.setText("inactive");
+            holder.status_Button.setText("activate");
+        } else {
+            holder.status_Textview.setText("active");
+            holder.status_Button.setText("suspend");
         }
 
-        holder.suspendButton.setOnClickListener(new View.OnClickListener() {
+        // Activate or Suspend a user account
+        holder.status_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                userDao.updateSuspended(user.getUsername());
-//                user.setSuspended(!user.isSuspended());
-//                notifyDataSetChanged();
-                userDao.updateSuspended(user.getId(), !user.isSuspended());
-                user.setSuspended(!user.isSuspended());
-                notifyDataSetChanged();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Are you sure you want to " + holder.status_Button.getText() + " " + user.getUsername() + "?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                user.setSuspended(true);
+                                notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                builder.create().show();
             }
         });
-
     }
 
     @Override
@@ -75,15 +83,16 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView username;
         private TextView email;
-        private TextView user_status;
-        private Button suspendButton;
+        private TextView status_Textview;
+        private Button status_Button;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.username);
             email = itemView.findViewById(R.id.email);
-            user_status = itemView.findViewById(R.id.user_status);
-            suspendButton = itemView.findViewById(R.id.suspend_button);
+            status_Textview = itemView.findViewById(R.id.status_Textview);
+            status_Button = itemView.findViewById(R.id.status_button);
         }
     }
 }

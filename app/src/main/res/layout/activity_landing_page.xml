@@ -36,10 +36,19 @@
         android:id="@+id/view_recipes_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Recipes"
+        android:text="View ALL Recipes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_recipe_button"/>
+
+    <Button
+        android:id="@+id/favourite_recipes_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MY FAVOURITE RECIPES "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_recipes_button" />
 
     <Button
         android:id="@+id/manage_users_button"
@@ -50,6 +59,6 @@
         tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_recipes_button" />
+        app:layout_constraintTop_toBottomOf="@+id/favourite_recipes_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

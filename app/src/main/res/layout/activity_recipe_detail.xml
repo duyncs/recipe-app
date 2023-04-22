@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/recipe_details_page_layout"
     android:background="@drawable/background"
     tools:context=".RecipeDetailActivity">
 
@@ -75,15 +76,29 @@
             android:textSize="18sp"
             android:textColor="@color/white"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_below="@id/recipe_directions"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/design_default_color_secondary"
-            android:text="Delete Recipe" />
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/add_to_favorites_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/design_default_color_secondary"
+                android:text="Add to Favorites" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="#02454A"
+                android:text="Delete Recipe" />
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -28,6 +28,7 @@ public class LandingPage extends AppCompatActivity {
         Button adminButton = findViewById(R.id.manage_users_button);
         Button addRecipeButton = findViewById(R.id.add_recipe_button);
         Button viewRecipesButton = findViewById(R.id.view_recipes_button);
+        Button favourite_recipes_button = findViewById(R.id.favourite_recipes_button);
         usernameTextLink.setText("Welcome, " + username);
 
         if (isAdmin) {
@@ -49,6 +50,15 @@ public class LandingPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LandingPage.this, RecipeListActivity.class);
+                startActivity(intent);
+            }
+        });
+        // Handle 'My Favourite Recipes' button
+        favourite_recipes_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LandingPage.this, FavoritesActivity.class);
+                intent.putExtra("user_id", currentUserId);
                 startActivity(intent);
             }
         });

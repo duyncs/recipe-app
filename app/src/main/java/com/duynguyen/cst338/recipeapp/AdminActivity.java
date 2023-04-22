@@ -30,7 +30,9 @@ public class AdminActivity extends AppCompatActivity {
     private AppDataBase appDataBase;
     private RecyclerView userRecyclerView;
     private TextView logOutLink;
+
     private int currentUserId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +68,4 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }
