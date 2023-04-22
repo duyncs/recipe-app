@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey;
 public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     @ColumnInfo(name = "username")
     private String username;
 
@@ -18,24 +17,22 @@ public class User {
     @ColumnInfo(name = "email")
     private String email;
 
-    @ColumnInfo(name = "suspended")
-    private boolean suspended;
+    @ColumnInfo(name = "is_suspended")
+    private boolean isSuspended;
 
     @ColumnInfo(name = "is_admin")
     private boolean isAdmin;
 
-    public User(String username, String password, String email, boolean suspended, boolean isAdmin) {
+    public User(String username, String password, String email, boolean isSuspended, boolean isAdmin) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.suspended = suspended;
+        this.isSuspended = isSuspended;
         this.isAdmin = isAdmin;
     }
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -65,11 +62,11 @@ public class User {
     }
 
     public boolean isSuspended() {
-        return suspended;
+        return isSuspended;
     }
 
     public void setSuspended(boolean suspended) {
-        this.suspended = suspended;
+        this.isSuspended = suspended;
     }
 
     public boolean isAdmin() {

@@ -27,12 +27,15 @@ public interface UserDAO {
     @Query("SELECT * FROM users WHERE email = :email")
     User getUserByEmail(String email);
 
-    @Query("SELECT * FROM users")
+    @Query("SELECT * FROM users WHERE is_admin = 0")
     List<User> getAllUsers();
 
-    @Query("UPDATE users SET suspended = :suspended WHERE id = :userId")
+    @Query("UPDATE users SET is_suspended = :suspended WHERE id = :userId")
     void updateSuspended(int userId, boolean suspended);
 
     @Query("SELECT COUNT(*) from users")
     int countUsers();
+
+    @Query("DELETE FROM users WHERE username = :username")
+    void deleteUserByUsername(String username);
 }

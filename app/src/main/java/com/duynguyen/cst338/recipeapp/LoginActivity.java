@@ -9,11 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.duynguyen.cst338.recipeapp.db.AppDataBase;
 import com.duynguyen.cst338.recipeapp.db.User;
 import com.duynguyen.cst338.recipeapp.db.UserDAO;
+
+import java.sql.SQLOutput;
 
 public class LoginActivity extends AppCompatActivity {
     AppDataBase userDatabase;
@@ -28,14 +31,16 @@ public class LoginActivity extends AppCompatActivity {
                 .allowMainThreadQueries().build().UserDAO();
 
         if (userDao.countUsers() == 0) {
-            userDao.insert(new User("testuser", "testuser", "testuser1@test.com", false,false));
-            userDao.insert(new User("admin", "admin", "admin@test.com",false,true));
+            userDao.insert(new User("testuser", "testuser", "testuser@test.com", false, false));
+            userDao.insert(new User("admin", "admin", "admin@test.com", false, true));
         }
-        Button loginButton = findViewById(R.id.login_button);
+        Button login_button = findViewById(R.id.login_button);
+        TextView register_link = findViewById(R.id.register_link);
         final EditText usernameInput = findViewById(R.id.username_EditText);
         final EditText passwordInput = findViewById(R.id.password_EditText);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+
+        login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = usernameInput.getText().toString().trim();
@@ -43,20 +48,34 @@ public class LoginActivity extends AppCompatActivity {
 
                 User user = userDao.getUser(username, password);
 
-                if (user != null) {
+//                if (user.isSuspended() == true) {
+//                    Toast.makeText(LoginActivity.this, "Your account is inactive. Please contact admin.", Toast.LENGTH_SHORT).show();
+//                }
+                if (user != null && !user.isSuspended()) {
                     SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("isLoggedIn", true);
                     editor.putString("username", user.getUsername());
                     editor.putBoolean("isAdmin", user.isAdmin());
+                    editor.putInt("userId", user.getId());
                     editor.apply();
 
                     Intent intent = new Intent(LoginActivity.this, LandingPage.class);
                     startActivity(intent);
                     finish();
-                } else {
+                }else {
                     Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
+            }
+
+        });
+
+        // Click on register
+        register_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
     }
